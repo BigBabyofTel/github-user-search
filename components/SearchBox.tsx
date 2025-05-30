@@ -9,21 +9,15 @@ export default function SearchBox() {
 
      const search = "/icon-search.svg"
   return (
-    <section className="w-11/12 p-2 border rounded-lg shadow-xl flex justify-around h-fit mx-auto">
-      <TextField id="input-with-icon-textfield"
-        slotProps={{
-          input: {
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          },
-        }}
-       placeholder="Search GitHub profiles..."
-        variant="standard"
-        
-        />
+    <section className="w-11/12 p-2 border rounded-lg shadow-xl flex justify-between h-fit mx-auto">
+    <section className=" w-1/2 flex items-center">
+    <SearchIcon />
+      <input
+        type="text"
+        placeholder="Search GitHub profiles..."
+        className="border-none outline-none ml-1" />
+    </section>
+
     <Button variant="contained">Search</Button>
     
   </section>

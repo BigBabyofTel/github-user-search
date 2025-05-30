@@ -20,6 +20,12 @@ export default function Home() {
       </section>
     </header>
    <SearchBox />
+   <div className="border w-11/12 mt-5 h-[600px] mx-auto rounded-lg shadow-xl p-2">
+    <div className="flex">
+      <section>image</section>
+      <section>titles</section>
+    </div>
+   </div>
 
     </>
   );
