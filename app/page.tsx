@@ -1,10 +1,13 @@
+"use client"
+
 import SearchBox from "@/components/SearchBox";
-import Image from "next/image";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { useUserData } from "@/lib/userData";
 
 
 export default function Home() {
 
-  const icon = "/icon-moon.svg"
+ const { name } = useUserData()
  
 
   return (
@@ -15,8 +18,8 @@ export default function Home() {
       </h1>
       <section className="h-full flex justify-between">
         {/* add a swtich that will change the text */}
-        <span className="mr-3">Dark</span>
-        <Image src={icon} alt="icon" width={20} height={20} />
+        <span className="mr-1">Dark</span>
+        <DarkModeIcon />
       </section>
     </header>
    <SearchBox />
