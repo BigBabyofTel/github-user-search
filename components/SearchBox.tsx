@@ -1,26 +1,25 @@
 "use client"
 
-import Image from "next/image"
-import { Button, TextField } from "@mui/material"
-import {InputAdornment} from "@mui/material"
+import { Button } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import { useState } from "react"
 import { SearchBoxProps } from "@/app/types"
 
 // search icon is together with the input 
-export default function SearchBox() {
+export default function SearchBox({ onSearch}: SearchBoxProps) {
+
   const [username, setUsername] = useState<string>("")
+  
 
- function handleSearch() {
-  if (username.trim()) {
+  function handleSearch() {
     onSearch(username)
-    setUsername("")
   }
- }
 
 
 
+console.log(username)
 
+console.log()
 
 
   return (
@@ -33,6 +32,7 @@ export default function SearchBox() {
         className="border-none outline-none ml-1" 
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
     </section>
 

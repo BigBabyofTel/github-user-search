@@ -2,12 +2,43 @@
 
 import SearchBox from "@/components/SearchBox";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useUserData } from "@/lib/userData";
+import { useUserData } from "@/lib/store";
+import { useState } from "react";
+import { GitHubUser } from "./types";
 
 
 export default function Home() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [userData, setUserData] = useState<GitHubUser | null>(null)
 
- const { name } = useUserData()
+  console.log(userData)
+
+
+async function handleSearch(username: string) {
+  setLoading(true)
+  setError('')
+
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}`)
+
+    if (!response.ok) {
+      throw new Error(response.status === 404 ? 'User not found' : 'Failed to fetch user')
+    }
+
+    const data: GitHubUser = await response.json()
+    //set user data
+    setUserData(data)
+
+  } catch (e) {
+    setError(e instanceof Error ? e.message : 'An error occured')
+  } finally {
+    setLoading(false)
+  }
+
+  return 
+
+}
  
 
   return (
@@ -22,7 +53,7 @@ export default function Home() {
         <DarkModeIcon />
       </section>
     </header>
-   <SearchBox />
+   <SearchBox onSearch={handleSearch} />
    <div className="border w-11/12 mt-5 h-[600px] mx-auto rounded-lg shadow-xl p-2">
     <div className="flex">
       <section>image</section>
