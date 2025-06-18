@@ -20,3 +20,7 @@ export interface GitHubUser {
     created_at: string;
   }
   
+export interface UserData {
+    user: GitHubUser;
+    setUser: (user: GitHubUser) => void;
+}
