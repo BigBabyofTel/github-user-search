@@ -3,10 +3,11 @@
 import Image from "next/image";
 import SearchBox from "@/components/SearchBox";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 
 import { useState } from "react";
 import { GitHubUser, UserData } from "./types";
+import DisplayBox from "@/components/DisplayBox";
 
 
 export default function Home() {
@@ -56,15 +57,7 @@ async function handleSearch(username: string) {
       </section>
     </header>
    <SearchBox onSearch={handleSearch} />
-   <div className="border w-11/12 mt-5 h-[600px] mx-auto rounded-lg shadow-xl p-2">
-    <div className="flex flex-col">
-      {!loading && <AccountCircleIcon />}
-    
-      <section>image</section>
-      <section>titles</section>
-    </div>
-   </div>
-
+  <DisplayBox loading={loading} userData={userData} />
     </>
   );
 }
