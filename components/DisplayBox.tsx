@@ -1,64 +1,85 @@
-"use client"
+'use client';
 
-import {GitHubUser} from '@/app/types';
-import Image from "next/image"
+import { GitHubUser } from '@/app/types';
+import Image from 'next/image';
+import XIcon from '@mui/icons-material/X';
+import BusinessIcon from '@mui/icons-material/Business';
+import LocationPinIcon from '@mui/icons-material/LocationPin';
+import LinkIcon from '@mui/icons-material/Link';
 
 interface DisplayBoxProps {
-    loading: boolean;
-    userData: GitHubUser | null;
+  loading: boolean;
+  userData: GitHubUser | null;
 }
 
-export default function DisplayBox({loading, userData}: DisplayBoxProps) {
+export default function DisplayBox({ loading, userData }: DisplayBoxProps) {
+  const newDate = (date: string) => {
+    const oldDate = new Date(date);
+    return new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC', // Crucial for UTC dates
+    }).format(oldDate);
+  };
 
+  return (
+    <div className="border w-11/12 my-5 h-fit mx-auto rounded-lg shadow-xl p-2 bg-white ">
+      <div className="flex flex-col">
+        {/* Section with the data added */}
 
-    const newDate = (date: string) => {
-        const oldDate = new Date(date);
-        return new Intl.DateTimeFormat('en-GB', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-            timeZone: 'UTC' // Crucial for UTC dates
-        }).format(oldDate);
-    }
+        {loading && <p>Loading...</p>}
 
-    return (
-        <div className="border w-11/12 mt-5 h-[600px] mx-auto rounded-lg shadow-xl p-2 bg-white ">
-            <div className="flex flex-col">
-
-                {/* Section with the data added */}
-
-                {loading && <p>Loading...</p>}
-
-                {userData && (
-                    <div className="bg-white">
-                        <section className="flex items-center p-4">
-                            <Image src={userData.avatar_url!} width={100} height={100} alt="Avatar"
-                                   className="rounded-full"/>
-                            <div className="flex flex-col ml-2">
-                                <h1 className="text-3xl font-semibold">{userData.login}</h1>
-                                <h2 className="text-blue-600 text-lg">@{userData.name}</h2>
-                                <p className="text-lg text-slate-600">Joined {newDate(userData.created_at)}</p>
-                            </div>
-                        </section>
-                        <p className="p-4">{userData.bio}</p>
-                        <section className="p-4 bg-neutral-100 rounded-lg">
-                            <p className="">Repos</p>
-                            <span> {userData.public_repos}</span>
-                            <p>Followers</p>
-                            <span>{userData.followers}</span>
-                            <p>Following</p>
-                            <span>{userData.following}</span>
-
-                        </section>
-                        <p>Twitter Username: {userData.twitter_username}</p>
-                        <p>Blog: {userData.blog}</p>
-                        <p>Company: {userData.company}</p>
-                        <p>Email: {userData.email}</p>
-
-                    </div>
-                )}
-
+        {userData && (
+          <div className="bg-white">
+            <section className="flex items-center p-4">
+              <Image
+                src={userData.avatar_url!}
+                width={100}
+                height={100}
+                alt="Avatar"
+                className="rounded-full"
+              />
+              <div className="flex flex-col ml-2">
+                <h1 className="text-3xl font-semibold">{userData.login}</h1>
+                <h2 className="text-blue-600 text-lg font-semibold">@{userData.name}</h2>
+                <p className="text-lg text-slate-600 font-bold">
+                  Joined {newDate(userData.created_at)}
+                </p>
+              </div>
+            </section>
+            <p className="p-4">{userData.bio}</p>
+            <section className="p-4 bg-neutral-100 rounded-lg flex flex-col items-start justify-items-start">
+              <p className="p-2 text-neutral-500">Repos</p>
+              <span className="text-2xl font-bold p-2"> {userData.public_repos}</span>
+              <p className="p-2 text-neutral-500">Followers</p>
+              <span className="text-2xl font-bold p-2">{userData.followers}</span>
+              <p className="p-2 text-neutral-500">Following</p>
+              <span className="text-2xl font-bold p-2">{userData.following}</span>
+            </section>
+            <div className="p-2">
+              <section className="flex items-center p-2">
+                <XIcon />
+                <p className="p-2">
+                  {userData.twitter_username ? userData.twitter_username : 'Not Available'}
+                </p>
+              </section>
+              <section className="flex items-center p-2">
+                <BusinessIcon />
+                <p className="p-2">{userData.company ? userData.company : 'Not Available'}</p>
+              </section>
+              <section className="flex items-center p-2">
+                <LocationPinIcon />
+                <p className="p-2">{userData.location ? userData.location : 'Not Available'}</p>
+              </section>
+              <section className="flex items-center p-2">
+                <LinkIcon />
+                <p className="p-2">{userData.html_url ? userData.html_url : 'Not Available'} </p>
+              </section>
             </div>
-        </div>
-    )
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
